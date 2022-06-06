@@ -25,6 +25,7 @@ public class mainFrame extends javax.swing.JFrame {
     //
     int cardInstances = 2;
     int cardInstances1 = 3;
+    int cardInstances2 = 6;
     
     //
     public int[][] cardArrayH = new int[2][2];
@@ -32,6 +33,9 @@ public class mainFrame extends javax.swing.JFrame {
     
     public int[][] cardArrayH1 = new int[3][2];
     public int[][] cardArrayS1 ={ { 1, 1 }, { 1, 1}, { 1, 1 } };
+    
+    public int[][] cardArrayH2 = new int[3][4];
+    public int[][] cardArrayS2 ={ { 1, 1,1, 1 }, { 1, 1, 1, 1}, { 1, 1, 1, 1 } };
     
     public mainFrame() {
         initComponents();
@@ -780,7 +784,35 @@ public class mainFrame extends javax.swing.JFrame {
             }
          
     }
+    public void sumArrayS2(){ //checks the array value to know how many left to pair and if the game ends
+        sumAS=0;
+//        for(i = 0; i<cardInstances; i++)
+//            {
+//                for(j = 0; j<cardInstances; j++)
+//                    {
+//                        sumAS+=cardArrayS[i][j];
+//                    }
+//            }
         
+        for (int[] eachRow : cardArrayS2) {
+                        for (int j : eachRow) {
+                                sumAS+=j;
+                        }
+//                        System.out.println("");
+                }
+         System.out.println("Cards to match: "+ sumAS);
+         if(sumAS==0){
+             imageClear1();
+                System.out.println("Congrats! Game Completed");
+                firstClick = true;
+//                System.out.println("total time: "+min+"min. and "+sec%60+" sec.");
+//                task.cancel(); // not cancel but reset timers only
+
+                
+            }
+         
+    }
+         
     public void ArrayHCompare(){
         if(cardArrayH[x2][y2]==cardArrayH[x1][y1]){// compares 2 user inputed coord.
                //System.out.println("well done");
@@ -803,6 +835,26 @@ public class mainFrame extends javax.swing.JFrame {
     }
     public void ArrayHCompare1(){
         if(cardArrayH1[x2][y2]==cardArrayH1[x1][y1]){// compares 2 user inputed coord.
+               //System.out.println("well done");
+               cardArrayS1[x2][y2]=0;
+               cardArrayS1[x1][y1]=0;
+           } else{
+               //System.out.println("WRONG"); count error
+           }
+            
+            timer.schedule(new TimerTask(){ // Timer to para mag show ng saglet ung second card
+                
+                @Override
+                public void run(){
+                    imageClear1();
+                    notDone=false;
+                    notDone2=false;
+                }
+            },500); 
+            
+    }
+    public void ArrayHCompare2(){
+        if(cardArrayH2[x2][y2]==cardArrayH2[x1][y1]){// compares 2 user inputed coord.
                //System.out.println("well done");
                cardArrayS1[x2][y2]=0;
                cardArrayS1[x1][y1]=0;
@@ -914,7 +966,110 @@ public class mainFrame extends javax.swing.JFrame {
         }
         
     }  
+    public void imageClear2(){
+
+        switch(cardArrayS2[0][0]){
+            case 1:
+                jButtonMedium00.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@back.jpg")));
+                break;
+            case 0:
+                jButtonMedium00.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@solve.jpg")));
+                break;      
+        }
+        switch(cardArrayS2[0][1]){
+            case 1:
+                jButtonMedium01.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@back.jpg")));
+                break;
+            case 0:
+                jButtonMedium01.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@solve.jpg")));
+                break;      
+        }
         
+      
+        switch(cardArrayS2[1][0]){
+            case 1:
+                jButtonMedium10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@back.jpg")));
+                break;
+            case 0:
+                jButtonMedium10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@solve.jpg")));
+                break;     
+        }
+        switch(cardArrayS2[1][1]){
+            case 1:
+                jButtonMedium11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@back.jpg")));
+                break;
+            case 0:
+                jButtonMedium11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@solve.jpg")));
+                break;     
+        }
+        switch(cardArrayS2[2][0]){
+            case 1:
+                jButtonMedium20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@back.jpg")));
+                break;
+            case 0:
+                jButtonMedium20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@solve.jpg")));
+                break;     
+        }
+        switch(cardArrayS2[2][1]){
+            case 1:
+                jButtonMedium21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@back.jpg")));
+                break;
+            case 0:
+                jButtonMedium21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@solve.jpg")));
+                break;     
+        }
+            switch(cardArrayS2[0][2]){
+            case 1:
+                jButtonMedium02.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@back.jpg")));
+                break;
+            case 0:
+                jButtonMedium02.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@solve.jpg")));
+                break;      
+        }
+        switch(cardArrayS2[0][3]){
+            case 1:
+                jButtonMedium03.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@back.jpg")));
+                break;
+            case 0:
+                jButtonMedium03.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@solve.jpg")));
+                break;      
+        }
+//        -------------------------
+      
+        switch(cardArrayS2[1][2]){
+            case 1:
+                jButtonMedium12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@back.jpg")));
+                break;
+            case 0:
+                jButtonMedium12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@solve.jpg")));
+                break;     
+        }
+        switch(cardArrayS2[1][3]){
+            case 1:
+                jButtonMedium13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@back.jpg")));
+                break;
+            case 0:
+                jButtonMedium13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@solve.jpg")));
+                break;     
+        }
+        switch(cardArrayS2[2][2]){
+            case 1:
+                jButtonMedium22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@back.jpg")));
+                break;
+            case 0:
+                jButtonMedium22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@solve.jpg")));
+                break;     
+        }
+        switch(cardArrayS2[2][3]){
+            case 1:
+                jButtonMedium23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@back.jpg")));
+                break;
+            case 0:
+                jButtonMedium23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@solve.jpg")));
+                break;     
+        }
+        
+    }     
     public void buttonImageGiver(JButton a , int b){
         switch(b){
             case 1:
@@ -928,6 +1083,18 @@ public class mainFrame extends javax.swing.JFrame {
             case 3:
 //                a.setIcon(imageb);
                 a.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/03.jpg")));
+                break;
+            case 4:
+//                a.setIcon(imagea);
+                a.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/04.jpg")));
+                break;
+            case 5:
+//                a.setIcon(imageb);
+                a.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/05.jpg")));
+                break;
+            case 6:
+//                a.setIcon(imageb);
+                a.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/06.jpg")));
                 break;
         }
     }
@@ -1024,6 +1191,59 @@ public class mainFrame extends javax.swing.JFrame {
         timer1.scheduleAtFixedRate(task1, 1000,1000); 
    
     }
+    public void firstClickRandomizer2(){
+        for (i=0;i<=cardInstances2;i++){
+                for(;;){                                    //first coordinate
+                    x=(int)(Math.random()*3);
+                    y=(int)(Math.random()*4);
+                    
+                   if(cardArrayH2[x][y]==0){
+                       cardArrayH2[x][y]=i;
+//                       System.out.println(x+ " "+ y);
+                       break;
+                   }else{
+                       //System.out.println(x+" "+y);   
+                   }
+                }
+                    for(;;){                                    //2nd coordinate but same value
+                        x=(int)(Math.random()*3);
+                        y=(int)(Math.random()*4);
+//                        System.out.println(x+ " "+ y);
+                       if(cardArrayH2[x][y]==0){
+                           cardArrayH2[x][y]=i;
+//                           System.out.println(x+ " "+ y);
+                           break;
+                       }else{
+                           //System.out.println(x+" "+y);   
+                       }
+                    }
+            }
+        for(i=0;i<3;i++){
+            for(j=0;j<4;j++){
+                System.out.print(cardArrayH2[i][j]+" ");
+                }
+            System.out.println(" ");
+            }
+         System.out.println(" ");
+//         for(i = 0; i<2; i++){
+//            for(j = 0; j<3; j++){
+//                cardArrayS [i][j]=1;
+//                System.out.print(cardArrayS1[i][j]+" ");
+//                }
+//            System.out.println();
+//        }
+        
+        for (int[] eachRow : cardArrayS2) {
+                        for (int j : eachRow) {
+                                
+                                System.out.print(j + "\t");
+                        }
+                        System.out.println("");
+                        
+                }
+        timer1.scheduleAtFixedRate(task1, 1000,1000); 
+   
+    }
     TimerTask task = new TimerTask(){ // timer ng oras
         public void run(){
             System.out.println("timer");
@@ -1054,7 +1274,22 @@ public class mainFrame extends javax.swing.JFrame {
             
         }
 };
-        
+    TimerTask task2 = new TimerTask(){ // timer ng oras
+        public void run(){
+            System.out.println("timer");
+//            sec++;
+//            System.out.println("seconds"+ sec);
+//            if(sec<=9){
+//                secTimer.setText(String.valueOf("0"+sec%60));
+//            }else{secTimer.setText(String.valueOf(sec%60));}
+//            min= sec/60;
+//            if(min<=9){
+//                minTimer.setText(String.valueOf("0"+min));
+//            }else{minTimer.setText(String.valueOf(min));}
+            
+        }
+};
+    
         
     private void jButtonEasy01ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEasy01ActionPerformed
         // TODO add your handling code here:
@@ -1418,6 +1653,44 @@ public class mainFrame extends javax.swing.JFrame {
 
     private void jButtonMedium00ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMedium00ActionPerformed
         // TODO add your handling code here:
+        if(firstClick){
+            
+            firstClickRandomizer2();
+            
+            //System.out.println("check check22");
+            firstClick = false;
+        }
+        if(cardArrayS2[0][0]==0 ){                 //***
+            System.out.println("this card is already done"); // error counting ?
+        }else if(x1==0 && y1==0){                 //***
+            System.out.println("this is your 1st choice pick another card"); // error counting ?
+        }else if(notDone==true && notDone2==true){                           //prevent actions while pairing
+            System.out.println("di pa tpos mag compute sandali naman");
+        }else if(clickCounter==1){
+            notDone= true;
+            clickCounter=2;
+            
+            b =cardArrayH2[0][0];     //***
+            buttonImageGiver(jButtonEasyy00, b);//***
+            x1=0;                                 //***
+            y1=0;                                 //***
+            System.out.println("1st choice");
+        }else{
+            
+            notDone2= true;
+            
+            
+            b =cardArrayH2[0][0];     //***
+            buttonImageGiver(jButtonEasyy00, b);//***
+            x2=0;                                 //*** 
+            y2=0;                                 //***  
+            System.out.println("2nd choice");
+                
+            ArrayHCompare2();
+            sumArrayS2();             
+            clickCounter=1;
+            }
+    
     }//GEN-LAST:event_jButtonMedium00ActionPerformed
 
     private void jButtonMedium10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMedium10ActionPerformed
