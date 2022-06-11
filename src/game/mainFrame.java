@@ -4,24 +4,32 @@
  * and open the template in the editor.
  */
 package game;
-import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 /**
  *
  * @author engeer
  */
 public class mainFrame extends javax.swing.JFrame {
-    
+    defaultValues DV = new defaultValues();
     Timer timer =new Timer();
     Timer timer1 =new Timer();
+    Timer timer2 =new Timer();
     
+    boolean restartLevelWatcher = false;
     private int clickCounter=1;//--
     boolean firstClick=true,notDone=false,notDone2=false; 
     int j,i,x,y, b, sumAS;
     int x1 = 50,x2 = 50,y1 = 50,y2 = 50;
+    
+    //
+    int secNorma1_1 = 30; // temp 10 should be 30
+    int secHard_1 = 10;
+    int secNorma1_2 = 40;
+    int secHard_2 = 15;
+    int secNorma1_3 = 60;
+    int secHard_3 = 40;
     //
     int cardInstances = 2;
     int cardInstances1 = 3;
@@ -34,11 +42,14 @@ public class mainFrame extends javax.swing.JFrame {
     public int[][] cardArrayH1 = new int[3][2];
     public int[][] cardArrayS1 ={ { 1, 1 }, { 1, 1}, { 1, 1 } };
     
-    public int[][] cardArrayH2 = new int[3][4];
+    public int[][] cardArrayH2 = new int[4][5];
     public int[][] cardArrayS2 ={ { 1, 1,1, 1 }, { 1, 1, 1, 1}, { 1, 1, 1, 1 } };
-    
+
     public mainFrame() {
         initComponents();
+        difficultyPanel.setVisible(false);
+        timerPanel.setVisible(false);
+        timerPanel.setToolTipText("The level fails when this timer hit zero and not all cards are solved");
     }
 
     /**
@@ -51,21 +62,26 @@ public class mainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         sidePanel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        timerPanel = new javax.swing.JPanel();
+        secTensDigit = new javax.swing.JLabel();
+        secOnesDigit = new javax.swing.JLabel();
+        togamePanel4 = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
+        startPanel = new javax.swing.JPanel();
+        playButton = new javax.swing.JButton();
+        difficultyPanel = new javax.swing.JPanel();
+        jButtonEasy = new javax.swing.JButton();
+        jButtonNormal = new javax.swing.JButton();
+        jButtonHard = new javax.swing.JButton();
+        instructionPanel = new javax.swing.JPanel();
+        continueToStage1Button = new javax.swing.JButton();
         gamePanel1 = new javax.swing.JPanel();
         jButtonEasy00 = new javax.swing.JButton();
         jButtonEasy01 = new javax.swing.JButton();
         jButtonEasy10 = new javax.swing.JButton();
         jButtonEasy11 = new javax.swing.JButton();
-        jPanel6 = new javax.swing.JPanel();
+        jPanelStory_1 = new javax.swing.JPanel();
+        jButton4 = new javax.swing.JButton();
         gamePanel2 = new javax.swing.JPanel();
         jButtonEasyy00 = new javax.swing.JButton();
         jButtonEasyy01 = new javax.swing.JButton();
@@ -73,7 +89,8 @@ public class mainFrame extends javax.swing.JFrame {
         jButtonEasyy10 = new javax.swing.JButton();
         jButtonEasyy11 = new javax.swing.JButton();
         jButtonEasyy21 = new javax.swing.JButton();
-        jPanel8 = new javax.swing.JPanel();
+        jPanelStory_2 = new javax.swing.JPanel();
+        jButton6 = new javax.swing.JButton();
         gamePanel3 = new javax.swing.JPanel();
         jButtonMedium00 = new javax.swing.JButton();
         jButtonMedium10 = new javax.swing.JButton();
@@ -89,6 +106,7 @@ public class mainFrame extends javax.swing.JFrame {
         jButtonMedium23 = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         gamePanel4 = new javax.swing.JPanel();
+        o_gamePanel41 = new game.o_gamePanel4();
         jPanel12 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -97,45 +115,37 @@ public class mainFrame extends javax.swing.JFrame {
 
         sidePanel.setBackground(new java.awt.Color(153, 0, 255));
 
-        jButton1.setText("1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        secTensDigit.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer0.png"))); // NOI18N
 
-        jButton2.setText("2");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
+        secOnesDigit.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        secOnesDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer0.png"))); // NOI18N
 
-        jButton3.setText("3");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout timerPanelLayout = new javax.swing.GroupLayout(timerPanel);
+        timerPanel.setLayout(timerPanelLayout);
+        timerPanelLayout.setHorizontalGroup(
+            timerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(timerPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(secTensDigit)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(secOnesDigit)
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+        timerPanelLayout.setVerticalGroup(
+            timerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, timerPanelLayout.createSequentialGroup()
+                .addContainerGap(43, Short.MAX_VALUE)
+                .addGroup(timerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(secOnesDigit)
+                    .addComponent(secTensDigit))
+                .addGap(20, 20, 20))
+        );
 
-        jButton4.setText("4");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        togamePanel4.setText("game4");
+        togamePanel4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
-        jButton5.setText("5");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
-        jButton6.setText("6");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                togamePanel4ActionPerformed(evt);
             }
         });
 
@@ -143,58 +153,122 @@ public class mainFrame extends javax.swing.JFrame {
         sidePanel.setLayout(sidePanelLayout);
         sidePanelLayout.setHorizontalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(sidePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(sidePanelLayout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3))
-                    .addGroup(sidePanelLayout.createSequentialGroup()
-                        .addComponent(jButton4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(timerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sidePanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(togamePanel4)
+                .addGap(26, 26, 26))
         );
         sidePanelLayout.setVerticalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sidePanelLayout.createSequentialGroup()
-                .addContainerGap(548, Short.MAX_VALUE)
-                .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5)
-                    .addComponent(jButton6))
-                .addGap(27, 27, 27))
+                .addGap(0, 412, Short.MAX_VALUE)
+                .addComponent(togamePanel4)
+                .addGap(54, 54, 54)
+                .addComponent(timerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         getContentPane().add(sidePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 170, 627));
 
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jTabbedPane1.addTab("tab1", jPanel2);
+        startPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel3.setBackground(new java.awt.Color(210, 240, 240));
+        playButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        playButton.setForeground(new java.awt.Color(255, 0, 204));
+        playButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/@back.jpg"))); // NOI18N
+        playButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        playButton.setMaximumSize(new java.awt.Dimension(100, 100));
+        playButton.setMinimumSize(new java.awt.Dimension(100, 100));
+        playButton.setPreferredSize(new java.awt.Dimension(100, 100));
+        playButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playButtonActionPerformed(evt);
+            }
+        });
+        startPanel.add(playButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 180, 220, 80));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 633, Short.MAX_VALUE)
+        difficultyPanel.setBackground(new java.awt.Color(153, 153, 255));
+
+        jButtonEasy.setText("Easy");
+        jButtonEasy.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButtonEasyMouseEntered(evt);
+            }
+        });
+        jButtonEasy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEasyActionPerformed(evt);
+            }
+        });
+
+        jButtonNormal.setText("Normal");
+        jButtonNormal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNormalActionPerformed(evt);
+            }
+        });
+
+        jButtonHard.setText("Hard");
+        jButtonHard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonHardActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout difficultyPanelLayout = new javax.swing.GroupLayout(difficultyPanel);
+        difficultyPanel.setLayout(difficultyPanelLayout);
+        difficultyPanelLayout.setHorizontalGroup(
+            difficultyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(difficultyPanelLayout.createSequentialGroup()
+                .addGap(92, 92, 92)
+                .addGroup(difficultyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jButtonNormal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonHard, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonEasy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 622, Short.MAX_VALUE)
+        difficultyPanelLayout.setVerticalGroup(
+            difficultyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(difficultyPanelLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jButtonEasy)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonNormal)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonHard)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab2", jPanel3);
+        startPanel.add(difficultyPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 300, 250, 120));
+
+        jTabbedPane1.addTab("tab1", startPanel);
+
+        instructionPanel.setBackground(new java.awt.Color(210, 240, 240));
+
+        continueToStage1Button.setText("Continue");
+        continueToStage1Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                continueToStage1ButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout instructionPanelLayout = new javax.swing.GroupLayout(instructionPanel);
+        instructionPanel.setLayout(instructionPanelLayout);
+        instructionPanelLayout.setHorizontalGroup(
+            instructionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, instructionPanelLayout.createSequentialGroup()
+                .addContainerGap(552, Short.MAX_VALUE)
+                .addComponent(continueToStage1Button)
+                .addGap(41, 41, 41))
+        );
+        instructionPanelLayout.setVerticalGroup(
+            instructionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, instructionPanelLayout.createSequentialGroup()
+                .addContainerGap(587, Short.MAX_VALUE)
+                .addComponent(continueToStage1Button)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("tab2", instructionPanel);
 
         gamePanel1.setBackground(new java.awt.Color(240, 210, 240));
         gamePanel1.setEnabled(false);
@@ -248,7 +322,7 @@ public class mainFrame extends javax.swing.JFrame {
         gamePanel1Layout.setHorizontalGroup(
             gamePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(gamePanel1Layout.createSequentialGroup()
-                .addGap(201, 201, 201)
+                .addGap(207, 207, 207)
                 .addGroup(gamePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(gamePanel1Layout.createSequentialGroup()
                         .addComponent(jButtonEasy10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -258,12 +332,12 @@ public class mainFrame extends javax.swing.JFrame {
                         .addComponent(jButtonEasy00, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButtonEasy01, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(214, Short.MAX_VALUE))
+                .addContainerGap(244, Short.MAX_VALUE))
         );
         gamePanel1Layout.setVerticalGroup(
             gamePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(gamePanel1Layout.createSequentialGroup()
-                .addGap(187, 187, 187)
+                .addGap(200, 200, 200)
                 .addGroup(gamePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButtonEasy01, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonEasy00, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -271,25 +345,38 @@ public class mainFrame extends javax.swing.JFrame {
                 .addGroup(gamePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButtonEasy11, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonEasy10, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(217, Short.MAX_VALUE))
+                .addContainerGap(205, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("tab3", gamePanel1);
 
-        jPanel6.setBackground(new java.awt.Color(240, 210, 230));
+        jPanelStory_1.setBackground(new java.awt.Color(240, 210, 230));
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 633, Short.MAX_VALUE)
+        jButton4.setText("4");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelStory_1Layout = new javax.swing.GroupLayout(jPanelStory_1);
+        jPanelStory_1.setLayout(jPanelStory_1Layout);
+        jPanelStory_1Layout.setHorizontalGroup(
+            jPanelStory_1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStory_1Layout.createSequentialGroup()
+                .addContainerGap(618, Short.MAX_VALUE)
+                .addComponent(jButton4)
+                .addContainerGap())
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 622, Short.MAX_VALUE)
+        jPanelStory_1Layout.setVerticalGroup(
+            jPanelStory_1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStory_1Layout.createSequentialGroup()
+                .addContainerGap(587, Short.MAX_VALUE)
+                .addComponent(jButton4)
+                .addContainerGap())
         );
 
-        jTabbedPane1.addTab("tab4", jPanel6);
+        jTabbedPane1.addTab("tab4", jPanelStory_1);
 
         gamePanel2.setBackground(new java.awt.Color(40, 240, 240));
 
@@ -379,12 +466,12 @@ public class mainFrame extends javax.swing.JFrame {
                             .addComponent(jButtonEasyy00, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
                             .addComponent(jButtonEasyy01, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(219, Short.MAX_VALUE))
+                .addContainerGap(255, Short.MAX_VALUE))
         );
         gamePanel2Layout.setVerticalGroup(
             gamePanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gamePanel2Layout.createSequentialGroup()
-                .addContainerGap(155, Short.MAX_VALUE)
+                .addContainerGap(156, Short.MAX_VALUE)
                 .addGroup(gamePanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButtonEasyy01, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonEasyy00, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -401,20 +488,33 @@ public class mainFrame extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("tab5", gamePanel2);
 
-        jPanel8.setBackground(new java.awt.Color(240, 40, 240));
+        jPanelStory_2.setBackground(new java.awt.Color(240, 40, 240));
 
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 633, Short.MAX_VALUE)
+        jButton6.setText("6");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelStory_2Layout = new javax.swing.GroupLayout(jPanelStory_2);
+        jPanelStory_2.setLayout(jPanelStory_2Layout);
+        jPanelStory_2Layout.setHorizontalGroup(
+            jPanelStory_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStory_2Layout.createSequentialGroup()
+                .addContainerGap(618, Short.MAX_VALUE)
+                .addComponent(jButton6)
+                .addContainerGap())
         );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 622, Short.MAX_VALUE)
+        jPanelStory_2Layout.setVerticalGroup(
+            jPanelStory_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStory_2Layout.createSequentialGroup()
+                .addContainerGap(587, Short.MAX_VALUE)
+                .addComponent(jButton6)
+                .addContainerGap())
         );
 
-        jTabbedPane1.addTab("tab6", jPanel8);
+        jTabbedPane1.addTab("tab6", jPanelStory_2);
 
         gamePanel3.setBackground(new java.awt.Color(240, 240, 40));
 
@@ -555,7 +655,7 @@ public class mainFrame extends javax.swing.JFrame {
         gamePanel3Layout.setHorizontalGroup(
             gamePanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gamePanel3Layout.createSequentialGroup()
-                .addContainerGap(95, Short.MAX_VALUE)
+                .addContainerGap(131, Short.MAX_VALUE)
                 .addGroup(gamePanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(gamePanel3Layout.createSequentialGroup()
                         .addComponent(jButtonMedium20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -587,7 +687,7 @@ public class mainFrame extends javax.swing.JFrame {
         gamePanel3Layout.setVerticalGroup(
             gamePanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gamePanel3Layout.createSequentialGroup()
-                .addContainerGap(145, Short.MAX_VALUE)
+                .addContainerGap(146, Short.MAX_VALUE)
                 .addGroup(gamePanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(gamePanel3Layout.createSequentialGroup()
                         .addComponent(jButtonMedium03, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -624,24 +724,35 @@ public class mainFrame extends javax.swing.JFrame {
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 633, Short.MAX_VALUE)
+            .addGap(0, 669, Short.MAX_VALUE)
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 622, Short.MAX_VALUE)
+            .addGap(0, 623, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("tab8", jPanel10);
+
+        javax.swing.GroupLayout o_gamePanel41Layout = new javax.swing.GroupLayout(o_gamePanel41);
+        o_gamePanel41.setLayout(o_gamePanel41Layout);
+        o_gamePanel41Layout.setHorizontalGroup(
+            o_gamePanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 669, Short.MAX_VALUE)
+        );
+        o_gamePanel41Layout.setVerticalGroup(
+            o_gamePanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 623, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout gamePanel4Layout = new javax.swing.GroupLayout(gamePanel4);
         gamePanel4.setLayout(gamePanel4Layout);
         gamePanel4Layout.setHorizontalGroup(
             gamePanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 633, Short.MAX_VALUE)
+            .addComponent(o_gamePanel41, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         gamePanel4Layout.setVerticalGroup(
             gamePanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 622, Short.MAX_VALUE)
+            .addComponent(o_gamePanel41, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("tab9", gamePanel4);
@@ -650,11 +761,11 @@ public class mainFrame extends javax.swing.JFrame {
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 633, Short.MAX_VALUE)
+            .addGap(0, 669, Short.MAX_VALUE)
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 622, Short.MAX_VALUE)
+            .addGap(0, 623, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("tab10", jPanel12);
@@ -666,33 +777,21 @@ public class mainFrame extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        jTabbedPane1.setSelectedIndex(6);
-    }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-        jTabbedPane1.setSelectedIndex(5);
-    }//GEN-LAST:event_jButton5ActionPerformed
+        jTabbedPane1.setSelectedComponent(gamePanel3);
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        jTabbedPane1.setSelectedIndex(4);
+       
+        jTabbedPane1.setSelectedComponent(gamePanel2);
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void continueToStage1ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueToStage1ButtonActionPerformed
         // TODO add your handling code here:
-        jTabbedPane1.setSelectedIndex(3);
-    }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        jTabbedPane1.setSelectedIndex(2);
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        jTabbedPane1.setSelectedIndex(1);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        jTabbedPane1.setSelectedComponent(gamePanel1);
+    }//GEN-LAST:event_continueToStage1ButtonActionPerformed
 
     private void jButtonEasy00ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEasy00ActionPerformed
         // TODO add your handling code here:
@@ -749,36 +848,42 @@ public class mainFrame extends javax.swing.JFrame {
                 System.out.println("Congrats! Game Completed");
                 imageClear();
                 firstClick = true;
-//                System.out.println("total time: "+min+"min. and "+sec%60+" sec.");
-//                task.cancel(); // not cancel but reset timers only
+                java.awt.EventQueue.invokeLater(new Runnable() {
+                    public void run() {
+                        new congratsWindow(jPanelStory_1,jTabbedPane1).setVisible(true); //--------
+                    }
+                });
 
+            task.cancel(); // stop timer //--------
+            setTimerImage(0, 0);
                 
             }
          
     }
     public void sumArrayS1(){ //checks the array value to know how many left to pair and if the game ends
         sumAS=0;
-//        for(i = 0; i<cardInstances; i++)
-//            {
-//                for(j = 0; j<cardInstances; j++)
-//                    {
-//                        sumAS+=cardArrayS[i][j];
-//                    }
-//            }
+
         
         for (int[] eachRow : cardArrayS1) {
                         for (int j : eachRow) {
                                 sumAS+=j;
                         }
-//                        System.out.println("");
+
                 }
          System.out.println("Cards to match: "+ sumAS);
          if(sumAS==0){
              imageClear1();
                 System.out.println("Congrats! Game Completed");
                 firstClick = true;
-//                System.out.println("total time: "+min+"min. and "+sec%60+" sec.");
-//                task.cancel(); // not cancel but reset timers only
+                java.awt.EventQueue.invokeLater(new Runnable() {
+                    public void run() {
+                        new congratsWindow(jPanelStory_2,jTabbedPane1).setVisible(true); //--------
+                    }
+                });
+
+            task1.cancel(); // stop timer //--------
+            setTimerImage(0, 0);
+
 
                 
             }
@@ -854,19 +959,23 @@ public class mainFrame extends javax.swing.JFrame {
             
     }
     public void ArrayHCompare2(){
+        try{
         if(cardArrayH2[x2][y2]==cardArrayH2[x1][y1]){// compares 2 user inputed coord.
                //System.out.println("well done");
-               cardArrayS1[x2][y2]=0;
-               cardArrayS1[x1][y1]=0;
+               cardArrayS2[x2][y2]=0;
+               cardArrayS2[x1][y1]=0;
            } else{
                //System.out.println("WRONG"); count error
            }
+        }catch(Exception e){
+            System.out.println("error "+ e);
+        }
             
             timer.schedule(new TimerTask(){ // Timer to para mag show ng saglet ung second card
                 
                 @Override
                 public void run(){
-                    imageClear1();
+                    imageClear2();
                     notDone=false;
                     notDone2=false;
                 }
@@ -1135,8 +1244,13 @@ public class mainFrame extends javax.swing.JFrame {
                 }
             System.out.println();
         }
+        secNorma1_1 = DV.getDsecNorma1_1();;
+        secHard_1 = DV.getDsecHard_1();;
+        try{
         timer.scheduleAtFixedRate(task, 1000,1000); 
-   
+        }catch(Exception e){
+            System.out.println("not the first");
+        }
     }   
     public void firstClickRandomizer1(){
         for (i=0;i<=cardInstances1;i++){
@@ -1172,13 +1286,7 @@ public class mainFrame extends javax.swing.JFrame {
             System.out.println(" ");
             }
          System.out.println(" ");
-//         for(i = 0; i<2; i++){
-//            for(j = 0; j<3; j++){
-//                cardArrayS [i][j]=1;
-//                System.out.print(cardArrayS1[i][j]+" ");
-//                }
-//            System.out.println();
-//        }
+
         
         for (int[] eachRow : cardArrayS1) {
                         for (int j : eachRow) {
@@ -1188,7 +1296,13 @@ public class mainFrame extends javax.swing.JFrame {
                         System.out.println("");
                         
                 }
-        timer1.scheduleAtFixedRate(task1, 1000,1000); 
+        secNorma1_2 = DV.getDsecNorma1_2();
+        secHard_2 = DV.getDsecHard_2();
+        try{
+        timer1.scheduleAtFixedRate(task1, 1000,1000); }
+        catch(Exception e){
+            
+        }
    
     }
     public void firstClickRandomizer2(){
@@ -1241,39 +1355,101 @@ public class mainFrame extends javax.swing.JFrame {
                         System.out.println("");
                         
                 }
-        timer1.scheduleAtFixedRate(task1, 1000,1000); 
+        timer2.scheduleAtFixedRate(task2, 1000,1000); 
    
     }
     TimerTask task = new TimerTask(){ // timer ng oras
         public void run(){
-            System.out.println("timer");
-//            sec++;
-//            System.out.println("seconds"+ sec);
-//            if(sec<=9){
-//                secTimer.setText(String.valueOf("0"+sec%60));
-//            }else{secTimer.setText(String.valueOf(sec%60));}
-//            min= sec/60;
-//            if(min<=9){
-//                minTimer.setText(String.valueOf("0"+min));
-//            }else{minTimer.setText(String.valueOf(min));}
+            currentSettings cSettings = currentSettings.getInstance();
             
+            int diff = cSettings.getDifficulty();
+            switch (diff) {
+                case 2:
+                    {
+                        // Normal
+                        timerPanel.setVisible(true);
+                        int ones = secNorma1_1% 10; //--------
+                        int tens = secNorma1_1 /10; //--------
+                        if (restartLevelWatcher){
+                            setTimerImage(0, 0);
+                        }else{
+                            setTimerImage(ones, tens);
+                        }       // Out of time Scenario Restarting Level
+                        if(secNorma1_1==0){      //--------
+                            resetGame();
+                            imageClear();
+                            levelFailedWindow();
+                        }       secNorma1_1 --; //--------
+                        break;
+                    }
+                case 3:
+                    {
+                        //Hard
+                        timerPanel.setVisible(true);
+                        int ones = secHard_1% 10; //--------
+                        int tens = secHard_1 /10; //--------
+                        setTimerImage(ones, tens);
+                        // Out of time Scenario Restarting Level
+                        if(secHard_1==0){          //--------
+                            resetGame();
+                            imageClear(); //--------
+                            levelFailedWindow();
+                        }       secHard_1 --; //--------
+                        break;
+                    }
+                default:
+                    timerPanel.setVisible(false);
+                    break;
+            }
         }
 };
     TimerTask task1 = new TimerTask(){ // timer ng oras
         public void run(){
-            System.out.println("timer");
-//            sec++;
-//            System.out.println("seconds"+ sec);
-//            if(sec<=9){
-//                secTimer.setText(String.valueOf("0"+sec%60));
-//            }else{secTimer.setText(String.valueOf(sec%60));}
-//            min= sec/60;
-//            if(min<=9){
-//                minTimer.setText(String.valueOf("0"+min));
-//            }else{minTimer.setText(String.valueOf(min));}
+//            System.out.println("timer");
+//            
+            currentSettings cSettings = currentSettings.getInstance();
             
+            int diff = cSettings.getDifficulty();
+            switch (diff) {
+                case 2:// Normal
+                    {
+                        
+                        timerPanel.setVisible(true);
+                        int ones = secNorma1_2% 10;
+                        int tens = secNorma1_2 /10;
+                        if (restartLevelWatcher){
+                            setTimerImage(0, 0);
+                        }else{
+                            setTimerImage(ones, tens);
+                        }       // Out of time Scenario Restarting Level
+                        if(secNorma1_2==0){
+                            resetGame1();
+                            imageClear1();
+                            levelFailedWindow();
+                        }       secNorma1_2 --;
+                        break;
+                    }
+                case 3://Hard
+                    {
+                        
+                        timerPanel.setVisible(true);
+                        int ones = secHard_2% 10;
+                        int tens = secHard_2 /10;
+                        setTimerImage(ones, tens);
+                        // Out of time Scenario Restarting Level
+                        if(secHard_2==0){
+                            resetGame1();
+                            imageClear1();
+                            levelFailedWindow();
+                        }       secHard_2 --;
+                        break;
+                    }
+                default:
+                    timerPanel.setVisible(false);
+                    break;
+            }
         }
-};
+    };
     TimerTask task2 = new TimerTask(){ // timer ng oras
         public void run(){
             System.out.println("timer");
@@ -1290,6 +1466,123 @@ public class mainFrame extends javax.swing.JFrame {
         }
 };
     
+    public void resetGame(){
+        setTimerImage(0,0);
+        cardArrayH = new int[2][2];
+        cardArrayS = new int[2][2];
+        firstClick=true;
+        notDone=false;
+        notDone2=false; 
+        clickCounter=1;
+        x1 = 50;x2 = 50;y1 = 50;y2 = 50;
+        for(i = 0; i<cardInstances; i++){ // resetting summaryArray
+            for(j = 0; j<cardInstances; j++){
+                cardArrayS [i][j]=1;
+            }
+        }
+    }
+        
+    public void resetGame1(){
+        setTimerImage(0,0);
+        cardArrayH1 = new int[3][2]; // -------
+//        this.cardArrayS1 = { { 1, 1 }, { 1, 1}, { 1, 1 } }
+//          RESETING THE Solution Array
+        resetCardArrayS1();
+ // ------
+        firstClick=true;
+        notDone=false;
+        notDone2=false; 
+        clickCounter=1;
+        x1 = 50;x2 = 50;y1 = 50;y2 = 50;
+//        for(i = 0; i<cardInstances; i++){ // resetting summaryArray
+//            for(j = 0; j<cardInstances; j++){
+//                cardArrayS [i][j]=1;
+//            }
+//        }
+    }
+    
+    public void resetCardArrayS1(){
+        for (int[] cardArrayS11 : cardArrayS1) {
+            for (int[] cardArrayS12 : cardArrayS1) {
+////                cardArrayS1[row][col] = 1;
+            }
+        }
+    }
+    public void levelFailedWindow(){
+        java.awt.EventQueue.invokeLater(new Runnable() {// prompt to restart or quit
+                        public void run() {
+                            new levelFailedWindow(jTabbedPane1,difficultyPanel,playButton).setVisible(true);
+                        }
+                    });
+    }
+    
+    public void setTimerImage(int ones , int tens ){
+        switch (ones){
+            case 0:
+                secOnesDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer0.png")));
+                break;
+            case 1:
+                secOnesDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer1.png")));
+                break;
+            case 2:
+                secOnesDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer2.png")));
+                break;
+            case 3:
+                secOnesDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer3.png")));
+                break;
+            case 4:
+                secOnesDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer4.png")));
+                break;
+            case 5:
+                secOnesDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer5.png")));
+                break;
+            case 6:
+                secOnesDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer6.png")));
+                break;
+            case 7:
+                secOnesDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer7.png")));
+                break;
+            case 8:
+                secOnesDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer8.png")));
+                break;
+            case 9:
+                secOnesDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer9.png")));
+                break;
+        }
+        switch (tens){
+            case 0:
+                secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer0.png")));
+                break;
+            case 1:
+                secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer1.png")));
+                break;
+            case 2:
+                secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer2.png")));
+                break;
+            case 3:
+                secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer3.png")));
+                break;
+            case 4:
+                secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer4.png")));
+                break;
+            case 5:
+                secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer5.png")));
+                break;
+            case 6:
+                secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer6.png")));
+                break;
+            case 7:
+                secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer7.png")));
+                break;
+            case 8:
+                secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer8.png")));
+                break;
+            case 9:
+                secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer9.png")));
+                break;
+        }
+        
+    }
         
     private void jButtonEasy01ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEasy01ActionPerformed
         // TODO add your handling code here:
@@ -1671,7 +1964,7 @@ public class mainFrame extends javax.swing.JFrame {
             clickCounter=2;
             
             b =cardArrayH2[0][0];     //***
-            buttonImageGiver(jButtonEasyy00, b);//***
+            buttonImageGiver(jButtonMedium00, b);//***
             x1=0;                                 //***
             y1=0;                                 //***
             System.out.println("1st choice");
@@ -1681,7 +1974,7 @@ public class mainFrame extends javax.swing.JFrame {
             
             
             b =cardArrayH2[0][0];     //***
-            buttonImageGiver(jButtonEasyy00, b);//***
+            buttonImageGiver(jButtonMedium00, b);//***
             x2=0;                                 //*** 
             y2=0;                                 //***  
             System.out.println("2nd choice");
@@ -1695,51 +1988,516 @@ public class mainFrame extends javax.swing.JFrame {
 
     private void jButtonMedium10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMedium10ActionPerformed
         // TODO add your handling code here:
+        if(firstClick){
+            
+            firstClickRandomizer2();
+            
+            //System.out.println("check check22");
+            firstClick = false;
+        }
+        if(cardArrayS2[1][0]==0 ){                 //***
+            System.out.println("this card is already done"); // error counting ?
+        }else if(x1==1 && y1==0){                 //***
+            System.out.println("this is your 1st choice pick another card"); // error counting ?
+        }else if(notDone==true && notDone2==true){                           //prevent actions while pairing
+            System.out.println("di pa tpos mag compute sandali naman");
+        }else if(clickCounter==1){
+            notDone= true;
+            clickCounter=2;
+            
+            b =cardArrayH2[1][0];     //***
+            buttonImageGiver(jButtonMedium10, b);//***
+            x1=1;                                 //***
+            y1=0;                                 //***
+            System.out.println("1st choice");
+        }else{
+            
+            notDone2= true;
+            
+            
+            b =cardArrayH2[1][0];     //***
+            buttonImageGiver(jButtonMedium10, b);//***
+            x2=1;                                 //*** 
+            y2=0;                                 //***  
+            System.out.println("2nd choice");
+                
+            ArrayHCompare2();
+            sumArrayS2();             
+            clickCounter=1;
+            }
+    
     }//GEN-LAST:event_jButtonMedium10ActionPerformed
 
     private void jButtonMedium01ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMedium01ActionPerformed
         // TODO add your handling code here:
+        
+        if(firstClick){
+            
+            firstClickRandomizer2();
+            
+            //System.out.println("check check22");
+            firstClick = false;
+        }
+        if(cardArrayS2[0][1]==0 ){                 //***
+            System.out.println("this card is already done"); // error counting ?
+        }else if(x1==0 && y1==1){                 //***
+            System.out.println("this is your 1st choice pick another card"); // error counting ?
+        }else if(notDone==true && notDone2==true){                           //prevent actions while pairing
+            System.out.println("di pa tpos mag compute sandali naman");
+        }else if(clickCounter==1){
+            notDone= true;
+            clickCounter=2;
+            
+            b =cardArrayH2[0][1];     //***
+            buttonImageGiver(jButtonMedium01, b);//***
+            x1=0;                                 //***
+            y1=1;                                 //***
+            System.out.println("1st choice");
+        }else{
+            
+            notDone2= true;
+            
+            
+            b =cardArrayH2[0][1];     //***
+            buttonImageGiver(jButtonMedium01, b);//***
+            x2=0;                                 //*** 
+            y2=1;                                 //***  
+            System.out.println("2nd choice");
+                
+            ArrayHCompare2();
+            sumArrayS2();             
+            clickCounter=1;
+            }
+    
     }//GEN-LAST:event_jButtonMedium01ActionPerformed
 
     private void jButtonMedium11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMedium11ActionPerformed
         // TODO add your handling code here:
+        
+        if(firstClick){
+            
+            firstClickRandomizer2();
+            
+            //System.out.println("check check22");
+            firstClick = false;
+        }
+        if(cardArrayS2[1][1]==0 ){                 //***
+            System.out.println("this card is already done"); // error counting ?
+        }else if(x1==1 && y1==1){                 //***
+            System.out.println("this is your 1st choice pick another card"); // error counting ?
+        }else if(notDone==true && notDone2==true){                           //prevent actions while pairing
+            System.out.println("di pa tpos mag compute sandali naman");
+        }else if(clickCounter==1){
+            notDone= true;
+            clickCounter=2;
+            
+            b =cardArrayH2[1][1];     //***
+            buttonImageGiver(jButtonMedium11, b);//***
+            x1=1;                                 //***
+            y1=1;                                 //***
+            System.out.println("1st choice");
+        }else{
+            
+            notDone2= true;
+            
+            
+            b =cardArrayH2[1][1];     //***
+            buttonImageGiver(jButtonMedium11, b);//***
+            x2=1;                                 //*** 
+            y2=1;                                 //***  
+            System.out.println("2nd choice");
+                
+            ArrayHCompare2();
+            sumArrayS2();             
+            clickCounter=1;
+            }
+    
     }//GEN-LAST:event_jButtonMedium11ActionPerformed
 
     private void jButtonMedium21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMedium21ActionPerformed
         // TODO add your handling code here:
+        if(firstClick){
+            
+            firstClickRandomizer2();
+            
+            //System.out.println("check check22");
+            firstClick = false;
+        }
+        if(cardArrayS2[2][1]==0 ){                 //***
+            System.out.println("this card is already done"); // error counting ?
+        }else if(x1==2 && y1==1){                 //***
+            System.out.println("this is your 1st choice pick another card"); // error counting ?
+        }else if(notDone==true && notDone2==true){                           //prevent actions while pairing
+            System.out.println("di pa tpos mag compute sandali naman");
+        }else if(clickCounter==1){
+            notDone= true;
+            clickCounter=2;
+            
+            b =cardArrayH2[2][1];     //***
+            buttonImageGiver(jButtonMedium21, b);//***
+            x1=2;                                 //***
+            y1=1;                                 //***
+            System.out.println("1st choice");
+        }else{
+            
+            notDone2= true;
+            
+            
+            b =cardArrayH2[2][1];     //***
+            buttonImageGiver(jButtonMedium21, b);//***
+            x2=2;                                 //*** 
+            y2=1;                                 //***  
+            System.out.println("2nd choice");
+                
+            ArrayHCompare2();
+            sumArrayS2();             
+            clickCounter=1;
+            }
+    
     }//GEN-LAST:event_jButtonMedium21ActionPerformed
 
     private void jButtonMedium20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMedium20ActionPerformed
         // TODO add your handling code here:
+        if(firstClick){
+            
+            firstClickRandomizer2();
+            
+            //System.out.println("check check22");
+            firstClick = false;
+        }
+        if(cardArrayS2[2][0]==0 ){                 //***
+            System.out.println("this card is already done"); // error counting ?
+        }else if(x1==2 && y1==0){                 //***
+            System.out.println("this is your 1st choice pick another card"); // error counting ?
+        }else if(notDone==true && notDone2==true){                           //prevent actions while pairing
+            System.out.println("di pa tpos mag compute sandali naman");
+        }else if(clickCounter==1){
+            notDone= true;
+            clickCounter=2;
+            
+            b =cardArrayH2[2][0];     //***
+            buttonImageGiver(jButtonMedium20, b);//***
+            x1=2;                                 //***
+            y1=0;                                 //***
+            System.out.println("1st choice");
+        }else{
+            
+            notDone2= true;
+            
+            
+            b =cardArrayH2[2][0];     //***
+            buttonImageGiver(jButtonMedium20, b);//***
+            x2=2;                                 //*** 
+            y2=0;                                 //***  
+            System.out.println("2nd choice");
+                
+            ArrayHCompare2();
+            sumArrayS2();             
+            clickCounter=1;
+            }
+    
     }//GEN-LAST:event_jButtonMedium20ActionPerformed
 
     private void jButtonMedium02ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMedium02ActionPerformed
         // TODO add your handling code here:
+        if(firstClick){
+            
+            firstClickRandomizer2();
+            
+            //System.out.println("check check22");
+            firstClick = false;
+        }
+        if(cardArrayS2[0][2]==0 ){                 //***
+            System.out.println("this card is already done"); // error counting ?
+        }else if(x1==0 && y1==2){                 //***
+            System.out.println("this is your 1st choice pick another card"); // error counting ?
+        }else if(notDone==true && notDone2==true){                           //prevent actions while pairing
+            System.out.println("di pa tpos mag compute sandali naman");
+        }else if(clickCounter==1){
+            notDone= true;
+            clickCounter=2;
+            
+            b =cardArrayH2[0][2];     //***
+            buttonImageGiver(jButtonMedium02, b);//***
+            x1=0;                                 //***
+            y1=2;                                 //***
+            System.out.println("1st choice");
+        }else{
+            
+            notDone2= true;
+            
+            
+            b =cardArrayH2[0][2];     //***
+            buttonImageGiver(jButtonMedium02, b);//***
+            x2=0;                                 //*** 
+            y2=2;                                 //***  
+            System.out.println("2nd choice");
+                
+            ArrayHCompare2();
+            sumArrayS2();             
+            clickCounter=1;
+            }
+    
     }//GEN-LAST:event_jButtonMedium02ActionPerformed
 
     private void jButtonMedium12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMedium12ActionPerformed
         // TODO add your handling code here:
+        if(firstClick){
+            
+            firstClickRandomizer2();
+            
+            //System.out.println("check check22");
+            firstClick = false;
+        }
+        if(cardArrayS2[1][2]==0 ){                 //***
+            System.out.println("this card is already done"); // error counting ?
+        }else if(x1==1 && y1==2){                 //***
+            System.out.println("this is your 1st choice pick another card"); // error counting ?
+        }else if(notDone==true && notDone2==true){                           //prevent actions while pairing
+            System.out.println("di pa tpos mag compute sandali naman");
+        }else if(clickCounter==1){
+            notDone= true;
+            clickCounter=2;
+            
+            b =cardArrayH2[1][2];     //***
+            buttonImageGiver(jButtonMedium12, b);//***
+            x1=1;                                 //***
+            y1=2;                                 //***
+            System.out.println("1st choice");
+        }else{
+            
+            notDone2= true;
+            
+            
+            b =cardArrayH2[1][2];     //***
+            buttonImageGiver(jButtonMedium12, b);//***
+            x2=1;                                 //*** 
+            y2=2;                                 //***  
+            System.out.println("2nd choice");
+                
+            ArrayHCompare2();
+            sumArrayS2();             
+            clickCounter=1;
+            }
+    
     }//GEN-LAST:event_jButtonMedium12ActionPerformed
 
     private void jButtonMedium22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMedium22ActionPerformed
         // TODO add your handling code here:
+        
+        if(firstClick){
+            
+            firstClickRandomizer2();
+            
+            //System.out.println("check check22");
+            firstClick = false;
+        }
+        if(cardArrayS2[2][2]==0 ){                 //***
+            System.out.println("this card is already done"); // error counting ?
+        }else if(x1==2 && y1==2){                 //***
+            System.out.println("this is your 1st choice pick another card"); // error counting ?
+        }else if(notDone==true && notDone2==true){                           //prevent actions while pairing
+            System.out.println("di pa tpos mag compute sandali naman");
+        }else if(clickCounter==1){
+            notDone= true;
+            clickCounter=2;
+            
+            b =cardArrayH2[2][2];     //***
+            buttonImageGiver(jButtonMedium22, b);//***
+            x1=2;                                 //***
+            y1=2;                                 //***
+            System.out.println("1st choice");
+        }else{
+            
+            notDone2= true;
+            
+            
+            b =cardArrayH2[2][2];     //***
+            buttonImageGiver(jButtonMedium22, b);//***
+            x2=2;                                 //*** 
+            y2=2;                                 //***  
+            System.out.println("2nd choice");
+                
+            ArrayHCompare2();
+            sumArrayS2();             
+            clickCounter=1;
+            }
+    
     }//GEN-LAST:event_jButtonMedium22ActionPerformed
 
     private void jButtonMedium03ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMedium03ActionPerformed
         // TODO add your handling code here:
+        
+        if(firstClick){
+            
+            firstClickRandomizer2();
+            
+            //System.out.println("check check22");
+            firstClick = false;
+        }
+        if(cardArrayS2[0][3]==0 ){                 //***
+            System.out.println("this card is already done"); // error counting ?
+        }else if(x1==0 && y1==3){                 //***
+            System.out.println("this is your 1st choice pick another card"); // error counting ?
+        }else if(notDone==true && notDone2==true){                           //prevent actions while pairing
+            System.out.println("di pa tpos mag compute sandali naman");
+        }else if(clickCounter==1){
+            notDone= true;
+            clickCounter=2;
+            
+            b =cardArrayH2[0][3];     //***
+            buttonImageGiver(jButtonMedium03, b);//***
+            x1=0;                                 //***
+            y1=3;                                 //***
+            System.out.println("1st choice");
+        }else{
+            
+            notDone2= true;
+            
+            
+            b =cardArrayH2[0][3];     //***
+            buttonImageGiver(jButtonMedium03, b);//***
+            x2=0;                                 //*** 
+            y2=3;                                 //***  
+            System.out.println("2nd choice");
+                
+            ArrayHCompare2();
+            sumArrayS2();             
+            clickCounter=1;
+            }
+    
     }//GEN-LAST:event_jButtonMedium03ActionPerformed
 
     private void jButtonMedium13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMedium13ActionPerformed
         // TODO add your handling code here:
+        
+        if(firstClick){
+            
+            firstClickRandomizer2();
+            
+            //System.out.println("check check22");
+            firstClick = false;
+        }
+        if(cardArrayS2[1][3]==0 ){                 //***
+            System.out.println("this card is already done"); // error counting ?
+        }else if(x1==1 && y1==3){                 //***
+            System.out.println("this is your 1st choice pick another card"); // error counting ?
+        }else if(notDone==true && notDone2==true){                           //prevent actions while pairing
+            System.out.println("di pa tpos mag compute sandali naman");
+        }else if(clickCounter==1){
+            notDone= true;
+            clickCounter=2;
+            
+            b =cardArrayH2[1][3];     //***
+            buttonImageGiver(jButtonMedium13, b);//***
+            x1=3;                                 //***
+            y1=3;                                 //***
+            System.out.println("1st choice");
+        }else{
+            
+            notDone2= true;
+            
+            
+            b =cardArrayH2[1][3];     //***
+            buttonImageGiver(jButtonMedium13, b);//***
+            x2=1;                                 //*** 
+            y2=3;                                 //***  
+            System.out.println("2nd choice");
+                
+            ArrayHCompare2();
+            sumArrayS2();             
+            clickCounter=1;
+            }
+    
     }//GEN-LAST:event_jButtonMedium13ActionPerformed
 
     private void jButtonMedium23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMedium23ActionPerformed
         // TODO add your handling code here:
+        
+        if(firstClick){
+            
+            firstClickRandomizer2();
+            
+            //System.out.println("check check22");
+            firstClick = false;
+        }
+        if(cardArrayS2[2][3]==0 ){                 //***
+            System.out.println("this card is already done"); // error counting ?
+        }else if(x1==2 && y1==3){                 //***
+            System.out.println("this is your 1st choice pick another card"); // error counting ?
+        }else if(notDone==true && notDone2==true){                           //prevent actions while pairing
+            System.out.println("di pa tpos mag compute sandali naman");
+        }else if(clickCounter==1){
+            notDone= true;
+            clickCounter=2;
+            
+            b =cardArrayH2[2][3];     //***
+            buttonImageGiver(jButtonMedium23, b);//***
+            x1=2;                                 //***
+            y1=3;                                 //***
+            System.out.println("1st choice");
+        }else{
+            
+            notDone2= true;
+            
+            
+            b =cardArrayH2[2][3];     //***
+            buttonImageGiver(jButtonMedium23, b);//***
+            x2=2;                                 //*** 
+            y2=3;                                 //***  
+            System.out.println("2nd choice");
+                
+            ArrayHCompare2();
+            sumArrayS2();             
+            clickCounter=1;
+            }
+    
     }//GEN-LAST:event_jButtonMedium23ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
+        // TODO add your handling code here:
+        jButtonEasy.setToolTipText("Play in easy mode. There are no Time limits in every level");
+        jButtonNormal.setToolTipText("Play in normal mode. The time is adequate enough to finish the levels");
+        jButtonHard.setToolTipText("Play in hard mode. Each card must be paired with minimal errors to finish the game within the time limit.");
+        difficultyPanel.setVisible(true);
+        playButton.setVisible(false);
+    }//GEN-LAST:event_playButtonActionPerformed
+
+    private void jButtonEasyMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonEasyMouseEntered
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jButtonEasyMouseEntered
+
+    private void jButtonEasyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEasyActionPerformed
+        // TODO add your handling code here:
+        currentSettings cSettings = currentSettings.getInstance();
+        cSettings.setDifficulty(1);
+
+        jTabbedPane1.setSelectedComponent(instructionPanel);
+    }//GEN-LAST:event_jButtonEasyActionPerformed
+
+    private void jButtonNormalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNormalActionPerformed
+        // TODO add your handling code here:
+        currentSettings cSettings = currentSettings.getInstance();
+        cSettings.setDifficulty(2);
+        
+        jTabbedPane1.setSelectedComponent(instructionPanel);
+    }//GEN-LAST:event_jButtonNormalActionPerformed
+
+    private void jButtonHardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHardActionPerformed
+        // TODO add your handling code here:
+        currentSettings cSettings = currentSettings.getInstance();
+        cSettings.setDifficulty(3);
+        
+        jTabbedPane1.setSelectedComponent(instructionPanel);
+    }//GEN-LAST:event_jButtonHardActionPerformed
+
+    private void togamePanel4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_togamePanel4ActionPerformed
+        // TODO add your handling code here:
+        jTabbedPane1.setSelectedComponent(gamePanel4);
+    }//GEN-LAST:event_togamePanel4ActionPerformed
+
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1773,16 +2531,16 @@ public class mainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton continueToStage1Button;
+    private javax.swing.JPanel difficultyPanel;
     private javax.swing.JPanel gamePanel1;
     private javax.swing.JPanel gamePanel2;
     private javax.swing.JPanel gamePanel3;
     private javax.swing.JPanel gamePanel4;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JPanel instructionPanel;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButtonEasy;
     private javax.swing.JButton jButtonEasy00;
     private javax.swing.JButton jButtonEasy01;
     private javax.swing.JButton jButtonEasy10;
@@ -1793,6 +2551,7 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonEasyy11;
     private javax.swing.JButton jButtonEasyy20;
     private javax.swing.JButton jButtonEasyy21;
+    private javax.swing.JButton jButtonHard;
     private javax.swing.JButton jButtonMedium00;
     private javax.swing.JButton jButtonMedium01;
     private javax.swing.JButton jButtonMedium02;
@@ -1805,13 +2564,19 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonMedium21;
     private javax.swing.JButton jButtonMedium22;
     private javax.swing.JButton jButtonMedium23;
+    private javax.swing.JButton jButtonNormal;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanelStory_1;
+    private javax.swing.JPanel jPanelStory_2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private game.o_gamePanel4 o_gamePanel41;
+    private javax.swing.JButton playButton;
+    private javax.swing.JLabel secOnesDigit;
+    private javax.swing.JLabel secTensDigit;
     private javax.swing.JPanel sidePanel;
+    private javax.swing.JPanel startPanel;
+    private javax.swing.JPanel timerPanel;
+    private javax.swing.JButton togamePanel4;
     // End of variables declaration//GEN-END:variables
 }
