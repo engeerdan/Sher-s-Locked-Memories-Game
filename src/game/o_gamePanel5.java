@@ -43,8 +43,13 @@ public class o_gamePanel5 extends javax.swing.JPanel {
     public int[][] cardArrayS2 ={ { 1, 1,1, 1 , 1}, { 1, 1, 1, 1, 1}, { 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1}};
     /**
      * Creates new form o_gamePanel4
+     * @param startPanel
+     * @param jTabbedPane1
      */
-   
+       public o_gamePanel5() {
+        initComponents();
+    }
+       
     public o_gamePanel5(JPanel timerPanel,JLabel secTensDigit, JLabel secOnesDigit,
             JTabbedPane jTabbedPane1, JPanel difficultyPanel, JButton playButton,
             JPanel startPanel) {

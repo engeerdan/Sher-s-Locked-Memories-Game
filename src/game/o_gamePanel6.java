@@ -44,7 +44,9 @@ public class o_gamePanel6 extends javax.swing.JPanel {
     /**
      * Creates new form o_gamePanel4
      */
-   
+    public o_gamePanel6() {
+        initComponents();
+    }
     public o_gamePanel6(JPanel timerPanel,JLabel secTensDigit, JLabel secOnesDigit,
             JTabbedPane jTabbedPane1, JPanel difficultyPanel, JButton playButton,
             JPanel startPanel) {

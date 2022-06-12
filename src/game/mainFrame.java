@@ -68,8 +68,6 @@ public class mainFrame extends javax.swing.JFrame {
         timerPanel = new javax.swing.JPanel();
         secTensDigit = new javax.swing.JLabel();
         secOnesDigit = new javax.swing.JLabel();
-        togamePanel4 = new javax.swing.JButton();
-        togamePanel5 = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         startPanel = new javax.swing.JPanel();
         playButton = new javax.swing.JButton();
@@ -109,14 +107,24 @@ public class mainFrame extends javax.swing.JFrame {
         jButtonMedium13 = new javax.swing.JButton();
         jButtonMedium23 = new javax.swing.JButton();
         jPanelStory_3 = new javax.swing.JPanel();
+        togamePanel4 = new javax.swing.JButton();
         gamePanel4 = new javax.swing.JPanel();
         o_gamePanel41 = new game.o_gamePanel4( timerPanel, secTensDigit, secOnesDigit,
             jTabbedPane1,  difficultyPanel,  playButton,startPanel,jPanelStory_4);
         jPanelStory_4 = new javax.swing.JPanel();
+        togamePanel5 = new javax.swing.JButton();
         gamePanel5 = new javax.swing.JPanel();
+        o_gamePanel51 = new game.o_gamePanel5(timerPanel, secTensDigit,  secOnesDigit,
+            jTabbedPane1,  difficultyPanel,  playButton,
+            startPanel);
         jPanelStory_5 = new javax.swing.JPanel();
+        togamePanel6 = new javax.swing.JButton();
         gamePanel6 = new javax.swing.JPanel();
+        o_gamePanel61 = new game.o_gamePanel6(timerPanel, secTensDigit,  secOnesDigit,
+            jTabbedPane1,  difficultyPanel,  playButton,
+            startPanel);
         jPanelStory_6 = new javax.swing.JPanel();
+        togamePanel7 = new javax.swing.JButton();
         gamePanel7 = new javax.swing.JPanel();
         jPanelStory_7 = new javax.swing.JPanel();
         gamePanel8 = new javax.swing.JPanel();
@@ -170,22 +178,6 @@ public class mainFrame extends javax.swing.JFrame {
         );
 
         sidePanel.add(timerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, -1, -1));
-
-        togamePanel4.setText("game4");
-        togamePanel4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                togamePanel4ActionPerformed(evt);
-            }
-        });
-        sidePanel.add(togamePanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, -1, -1));
-
-        togamePanel5.setText("game5");
-        togamePanel5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                togamePanel5ActionPerformed(evt);
-            }
-        });
-        sidePanel.add(togamePanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, -1, -1));
 
         getContentPane().add(sidePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 170, 600));
 
@@ -746,15 +738,28 @@ public class mainFrame extends javax.swing.JFrame {
         jPanelStory_3.setMaximumSize(new java.awt.Dimension(693, 623));
         jPanelStory_3.setMinimumSize(new java.awt.Dimension(693, 623));
 
+        togamePanel4.setText("game4");
+        togamePanel4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                togamePanel4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelStory_3Layout = new javax.swing.GroupLayout(jPanelStory_3);
         jPanelStory_3.setLayout(jPanelStory_3Layout);
         jPanelStory_3Layout.setHorizontalGroup(
             jPanelStory_3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 693, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStory_3Layout.createSequentialGroup()
+                .addContainerGap(616, Short.MAX_VALUE)
+                .addComponent(togamePanel4)
+                .addContainerGap())
         );
         jPanelStory_3Layout.setVerticalGroup(
             jPanelStory_3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 623, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStory_3Layout.createSequentialGroup()
+                .addContainerGap(583, Short.MAX_VALUE)
+                .addComponent(togamePanel4)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("tab8", jPanelStory_3);
@@ -774,15 +779,28 @@ public class mainFrame extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("tab9", gamePanel4);
 
+        togamePanel5.setText("game5");
+        togamePanel5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                togamePanel5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelStory_4Layout = new javax.swing.GroupLayout(jPanelStory_4);
         jPanelStory_4.setLayout(jPanelStory_4Layout);
         jPanelStory_4Layout.setHorizontalGroup(
             jPanelStory_4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 693, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStory_4Layout.createSequentialGroup()
+                .addContainerGap(593, Short.MAX_VALUE)
+                .addComponent(togamePanel5)
+                .addGap(34, 34, 34))
         );
         jPanelStory_4Layout.setVerticalGroup(
             jPanelStory_4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 619, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStory_4Layout.createSequentialGroup()
+                .addContainerGap(570, Short.MAX_VALUE)
+                .addComponent(togamePanel5)
+                .addGap(24, 24, 24))
         );
 
         jTabbedPane1.addTab("tab10", jPanelStory_4);
@@ -791,24 +809,41 @@ public class mainFrame extends javax.swing.JFrame {
         gamePanel5.setLayout(gamePanel5Layout);
         gamePanel5Layout.setHorizontalGroup(
             gamePanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 693, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gamePanel5Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(o_gamePanel51, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         gamePanel5Layout.setVerticalGroup(
             gamePanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 619, Short.MAX_VALUE)
+            .addGroup(gamePanel5Layout.createSequentialGroup()
+                .addComponent(o_gamePanel51, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("tab11", gamePanel5);
+
+        togamePanel6.setText("game5");
+        togamePanel6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                togamePanel6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelStory_5Layout = new javax.swing.GroupLayout(jPanelStory_5);
         jPanelStory_5.setLayout(jPanelStory_5Layout);
         jPanelStory_5Layout.setHorizontalGroup(
             jPanelStory_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 693, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStory_5Layout.createSequentialGroup()
+                .addContainerGap(593, Short.MAX_VALUE)
+                .addComponent(togamePanel6)
+                .addGap(34, 34, 34))
         );
         jPanelStory_5Layout.setVerticalGroup(
             jPanelStory_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 619, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStory_5Layout.createSequentialGroup()
+                .addContainerGap(570, Short.MAX_VALUE)
+                .addComponent(togamePanel6)
+                .addGap(24, 24, 24))
         );
 
         jTabbedPane1.addTab("tab12", jPanelStory_5);
@@ -817,24 +852,42 @@ public class mainFrame extends javax.swing.JFrame {
         gamePanel6.setLayout(gamePanel6Layout);
         gamePanel6Layout.setHorizontalGroup(
             gamePanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 693, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gamePanel6Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(o_gamePanel61, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         gamePanel6Layout.setVerticalGroup(
             gamePanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 619, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gamePanel6Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(o_gamePanel61, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("tab11", gamePanel6);
+
+        togamePanel7.setText("game5");
+        togamePanel7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                togamePanel7ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelStory_6Layout = new javax.swing.GroupLayout(jPanelStory_6);
         jPanelStory_6.setLayout(jPanelStory_6Layout);
         jPanelStory_6Layout.setHorizontalGroup(
             jPanelStory_6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 693, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStory_6Layout.createSequentialGroup()
+                .addContainerGap(577, Short.MAX_VALUE)
+                .addComponent(togamePanel7)
+                .addGap(50, 50, 50))
         );
         jPanelStory_6Layout.setVerticalGroup(
             jPanelStory_6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 619, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStory_6Layout.createSequentialGroup()
+                .addContainerGap(569, Short.MAX_VALUE)
+                .addComponent(togamePanel7)
+                .addGap(25, 25, 25))
         );
 
         jTabbedPane1.addTab("tab12", jPanelStory_6);
@@ -1028,8 +1081,17 @@ public class mainFrame extends javax.swing.JFrame {
          System.out.println("Cards to match: "+ sumAS);
          if(sumAS==0){
              imageClear1();
+             
+                
                 System.out.println("Congrats! Game Completed");
                 firstClick = true;
+                java.awt.EventQueue.invokeLater(new Runnable() {
+                    public void run() {
+                        new congratsWindow(jPanelStory_3,jTabbedPane1).setVisible(true); //--------
+                    }
+                });
+                task1.cancel(); // stop timer //--------
+                setTimerImage(0, 0);
 //                System.out.println("total time: "+min+"min. and "+sec%60+" sec.");
 //                task.cancel(); // not cancel but reset timers only
 
@@ -2626,6 +2688,15 @@ public class mainFrame extends javax.swing.JFrame {
         jTabbedPane1.setSelectedComponent(gamePanel5);
     }//GEN-LAST:event_togamePanel5ActionPerformed
 
+    private void togamePanel6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_togamePanel6ActionPerformed
+        // TODO add your handling code here:
+        jTabbedPane1.setSelectedComponent(gamePanel6);
+    }//GEN-LAST:event_togamePanel6ActionPerformed
+
+    private void togamePanel7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_togamePanel7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_togamePanel7ActionPerformed
+
     
 
 
@@ -2679,6 +2750,8 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelStory_8;
     private javax.swing.JTabbedPane jTabbedPane1;
     private game.o_gamePanel4 o_gamePanel41;
+    private game.o_gamePanel5 o_gamePanel51;
+    private game.o_gamePanel6 o_gamePanel61;
     private javax.swing.JButton playButton;
     private javax.swing.JLabel secOnesDigit;
     private javax.swing.JLabel secTensDigit;
@@ -2687,6 +2760,8 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel timerPanel;
     private javax.swing.JButton togamePanel4;
     private javax.swing.JButton togamePanel5;
+    private javax.swing.JButton togamePanel6;
+    private javax.swing.JButton togamePanel7;
     // End of variables declaration//GEN-END:variables
 
     void hideTimerpanel() {
