@@ -17,6 +17,7 @@ import javax.swing.JTabbedPane;
 public class levelFailedWindow extends javax.swing.JFrame {
     JTabbedPane jTabbedPane1;
     JPanel difficultyPanel;
+    JPanel startPanel;
     JButton playButton;
     /**
      * Creates new form quitOrRestartWindow
@@ -24,11 +25,12 @@ public class levelFailedWindow extends javax.swing.JFrame {
     public levelFailedWindow() {
         initComponents();
     }
-    public levelFailedWindow(JTabbedPane jTabbedPane1, JPanel difficultyPanel, JButton playButton){
+    public levelFailedWindow(JTabbedPane jTabbedPane1, JPanel difficultyPanel, JButton playButton, JPanel startPanel){
         initComponents();
         this.jTabbedPane1 =jTabbedPane1;
         this.difficultyPanel =difficultyPanel;
         this.playButton =playButton;
+        this.startPanel =startPanel;
     }
 
     /**
@@ -72,6 +74,7 @@ public class levelFailedWindow extends javax.swing.JFrame {
     private void restartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartButtonActionPerformed
         // TODO add your handling code here:
         mainFrame mf = new mainFrame(); 
+        o_gamePanel4 gp = new o_gamePanel4();
         mf.imageClear();
         mf.resetCardArrayS1();
         mf.imageClear1();
@@ -83,45 +86,17 @@ public class levelFailedWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
         jTabbedPane1.setSelectedIndex(0);
+        jTabbedPane1.setSelectedComponent(startPanel);
         playButton.setVisible(true);
         difficultyPanel.setVisible(false);
+        mainFrame mf = new mainFrame();
+        mf.hideTimerpanel();
     }//GEN-LAST:event_quitButtonActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(levelFailedWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(levelFailedWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(levelFailedWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(levelFailedWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new levelFailedWindow().setVisible(true);
-            }
-        });
-    }
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
