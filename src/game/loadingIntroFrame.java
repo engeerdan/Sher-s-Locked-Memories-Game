@@ -5,6 +5,14 @@
  */
 package game;
 
+import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 /**
  *
  * @author engeer
@@ -16,6 +24,8 @@ public class loadingIntroFrame extends javax.swing.JFrame {
      */
     public loadingIntroFrame() {
         initComponents();
+        jLabel1.setVisible(true);
+                jButton1.setToolTipText("Click to continue");
     }
 
     /**
@@ -30,15 +40,22 @@ public class loadingIntroFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        loading = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setFont(new java.awt.Font("Freestyle Script", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 51, 102));
         jLabel1.setText("Press any key to Continue. . .");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 560, 150, 40));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 560, 150, 40));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/peaceful-wallpaper-800x600.jpg"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Intro1.jpg"))); // NOI18N
         jButton1.setMargin(new java.awt.Insets(0, 0, 0, 0));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -52,6 +69,76 @@ public class loadingIntroFrame extends javax.swing.JFrame {
         });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Intro2.jpg"))); // NOI18N
+        jButton2.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jButton2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton2KeyPressed(evt);
+            }
+        });
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Intro3.jpg"))); // NOI18N
+        jButton3.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jButton3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton3KeyPressed(evt);
+            }
+        });
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Intro4.jpg"))); // NOI18N
+        jButton4.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jButton4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton4KeyPressed(evt);
+            }
+        });
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Intro5.jpg"))); // NOI18N
+        jButton5.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jButton5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton5KeyPressed(evt);
+            }
+        });
+        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        loading.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Loading Animation 2.jpg"))); // NOI18N
+        loading.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        loading.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadingActionPerformed(evt);
+            }
+        });
+        loading.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                loadingKeyPressed(evt);
+            }
+        });
+        jPanel1.add(loading, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -64,28 +151,108 @@ public class loadingIntroFrame extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new mainFrame().setVisible(true);
-            }
-        });
-        this.dispose();
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new mainFrame().setVisible(true);
+//            }
+//        });
+//        this.dispose();
+        jButton1.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
         // TODO add your handling code here:
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new mainFrame().setVisible(true);
-            }
-        });
-        this.dispose();
+        // End
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new mainFrame().setVisible(true);
+//            }
+//        });
+//        this.dispose();
+        jButton1.setVisible(false);
     }//GEN-LAST:event_jButton1KeyPressed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        jButton2.setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton2KeyPressed
+        // TODO add your handling code here:
+        jButton2.setVisible(false);
+    }//GEN-LAST:event_jButton2KeyPressed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        jButton3.setVisible(false);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton3KeyPressed
+        // TODO add your handling code here:
+        jButton3.setVisible(false);
+    }//GEN-LAST:event_jButton3KeyPressed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        jButton4.setVisible(false);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton4KeyPressed
+        // TODO add your handling code here:
+        jButton4.setVisible(false);
+    }//GEN-LAST:event_jButton4KeyPressed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        loadingSequence();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton5KeyPressed
+        // TODO add your handling code here:
+        loadingSequence();
+    }//GEN-LAST:event_jButton5KeyPressed
+
+    private void loadingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadingActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loadingActionPerformed
+
+    private void loadingKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loadingKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loadingKeyPressed
+
+    
+    public void loadingSequence(){
+        
+        
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    new mainFrame().setVisible(true);
+                } catch (UnsupportedAudioFileException ex) {
+                    Logger.getLogger(loadingIntroFrame.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(loadingIntroFrame.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (LineUnavailableException ex) {
+                    Logger.getLogger(loadingIntroFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+                 });
+        
+        this.dispose();
+    }
+    
+    public void imageSwitcher(){
+        
+    }
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -93,7 +260,12 @@ public class loadingIntroFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton loading;
     // End of variables declaration//GEN-END:variables
 }

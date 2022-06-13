@@ -5,6 +5,10 @@
  */
 package game;
 
+import java.awt.AWTException;
+import java.awt.Dimension;
+import java.awt.Robot;
+import java.awt.Toolkit;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -46,6 +50,7 @@ public class levelFailedWindow extends javax.swing.JFrame {
         quitButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -66,32 +71,50 @@ public class levelFailedWindow extends javax.swing.JFrame {
         getContentPane().add(quitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 62, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/promptWindow.png"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel1MouseExited(evt);
+            }
+        });
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 300));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void restartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartButtonActionPerformed
         // TODO add your handling code here:
-        mainFrame mf = new mainFrame(); 
-        o_gamePanel4 gp = new o_gamePanel4();
-        mf.imageClear();
-        mf.resetCardArrayS1();
-        mf.imageClear1();
-        mf.imageClear2();
+        
         this.dispose();
     }//GEN-LAST:event_restartButtonActionPerformed
 
     private void quitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitButtonActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        System.exit(0);
         jTabbedPane1.setSelectedIndex(0);
         jTabbedPane1.setSelectedComponent(startPanel);
         playButton.setVisible(true);
         difficultyPanel.setVisible(false);
-        mainFrame mf = new mainFrame();
-        mf.hideTimerpanel();
     }//GEN-LAST:event_quitButtonActionPerformed
+
+    private void jLabel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseExited
+        // TODO add your handling code here:
+//        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+//        int centerX = screenSize.width/2;
+//        int centerY = screenSize.height/2;
+//        
+//         try {
+//            // These coordinates are screen coordinates
+//            int xCoord = centerX;
+//            int yCoord = centerY;
+//
+//            // Move the cursor
+//            Robot robot = new Robot();
+//            robot.mouseMove(xCoord, yCoord);
+//          } catch (AWTException e) {
+//              System.out.println(e);
+//          }
+    }//GEN-LAST:event_jLabel1MouseExited
 
     /**
      * @param args the command line arguments

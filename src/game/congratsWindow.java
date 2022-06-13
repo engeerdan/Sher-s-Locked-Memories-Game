@@ -5,6 +5,10 @@
  */
 package game;
 
+import java.awt.AWTException;
+import java.awt.Dimension;
+import java.awt.Robot;
+import java.awt.Toolkit;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JPanel;
@@ -18,18 +22,23 @@ public class congratsWindow extends javax.swing.JFrame {
     JPanel jPanel;
     JTabbedPane jTabbedPane1;
     int index = 100;
+    int reward ;
+     int mouse=0;
     /**
      * Creates new form congratsWindow
      */
     public congratsWindow() {
         initComponents();
     }
-    public congratsWindow(JPanel jPanel,JTabbedPane jTabbedPane1) {
+    
+    
+    public congratsWindow(int reward, JPanel jPanel,JTabbedPane jTabbedPane1) {
         initComponents();
         this.jPanel = jPanel;
         this.jTabbedPane1 = jTabbedPane1;
         jButtonContinue.setVisible(false);
-        
+        this.reward = reward;
+        imageGiver(reward);
         Timer timer =new Timer();
         timer.schedule(new TimerTask(){ // Timer to para mag show ng saglet ung second card
                 
@@ -42,12 +51,13 @@ public class congratsWindow extends javax.swing.JFrame {
         
     }
     
-    public congratsWindow(int index,JTabbedPane jTabbedPane1) {
+    public congratsWindow(int reward,int index,JTabbedPane jTabbedPane1) {
         initComponents();
         this.index = index;
         this.jTabbedPane1 = jTabbedPane1;
         jButtonContinue.setVisible(false);
-        
+        this.reward = reward;
+        imageGiver(reward);
         Timer timer =new Timer();
         timer.schedule(new TimerTask(){ // Timer to para mag show ng saglet ung second card
                 
@@ -72,6 +82,7 @@ public class congratsWindow extends javax.swing.JFrame {
         jButtonContinue = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setAlwaysOnTop(true);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMaximumSize(new java.awt.Dimension(400, 300));
@@ -79,19 +90,68 @@ public class congratsWindow extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButtonContinue.setText("Continue");
+        jButtonContinue.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButtonContinueMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButtonContinueMouseExited(evt);
+            }
+        });
         jButtonContinue.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonContinueActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonContinue, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, -1, -1));
+        getContentPane().add(jButtonContinue, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 290, -1, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/promptWindow.png"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 300));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Level 1.jpg"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel1MouseExited(evt);
+            }
+        });
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 410));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    public void imageGiver(int reward){
+        switch(reward){
+            case 1:
+//                a.setIcon(imagea);
+                jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Level 1.jpg")));
+                break;
+            case 2:
+//                a.setIcon(imageb);
+                jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Level 2.jpg")));
+                break;
+            case 3:
+//                a.setIcon(imageb);
+                jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Level 3.jpg")));
+                break;
+            case 4:
+//                a.setIcon(imagea);
+                jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Level 4.jpg")));
+                break;
+            case 5:
+//                a.setIcon(imageb);
+                jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Level 5.jpg")));
+                break;
+            case 6:
+//                a.setIcon(imageb);
+                jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Level 6.jpg")));
+                break;
+                case 7:
+//                a.setIcon(imageb);
+                jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Level 7.jpg")));
+                break;
+                case 8:
+//                a.setIcon(imageb);
+                jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Level 8.jpg")));
+                break;
+        }
+    }
     private void jButtonContinueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonContinueActionPerformed
         // TODO add your handling code here:
         
@@ -105,6 +165,39 @@ public class congratsWindow extends javax.swing.JFrame {
         dispose();
         
     }//GEN-LAST:event_jButtonContinueActionPerformed
+
+    private void jLabel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseExited
+        // TODO add your handling code here:
+//        if(mouse == 1){
+//            
+//        }else{
+//            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+//            int centerX = screenSize.width/2;
+//            int centerY = screenSize.height/2;
+//
+//             try {
+//                // These coordinates are screen coordinates
+//                int xCoord = centerX;
+//                int yCoord = centerY;
+//
+//                // Move the cursor
+//                Robot robot = new Robot();
+//                robot.mouseMove(xCoord, yCoord);
+//              } catch (AWTException e) {
+//                  System.out.println(e);
+//              }
+//        }
+    }//GEN-LAST:event_jLabel1MouseExited
+
+    private void jButtonContinueMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonContinueMouseEntered
+        // TODO add your handling code here:
+         mouse = 1;
+    }//GEN-LAST:event_jButtonContinueMouseEntered
+
+    private void jButtonContinueMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonContinueMouseExited
+        // TODO add your handling code here:
+          mouse =0;
+    }//GEN-LAST:event_jButtonContinueMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

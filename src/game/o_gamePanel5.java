@@ -5,8 +5,12 @@
  */
 package game;
 
+import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,10 +21,13 @@ import javax.swing.JTabbedPane;
  * @author engeer
  */
 public class o_gamePanel5 extends javax.swing.JPanel {
-    
+    File correctFile = new File ("./src/resources/correct.wav");
+    AudioInputStream correctStream;
+    Clip correctClip; 
+            
     JPanel timerPanel,difficultyPanel,startPanel;
     
-    JLabel secOnesDigit,secTensDigit;
+    JLabel secOnesDigit,secTensDigit ,sec100sDigit;
     JTabbedPane jTabbedPane1; 
     JButton playButton;
     
@@ -52,7 +59,7 @@ public class o_gamePanel5 extends javax.swing.JPanel {
        
     public o_gamePanel5(JPanel timerPanel,JLabel secTensDigit, JLabel secOnesDigit,
             JTabbedPane jTabbedPane1, JPanel difficultyPanel, JButton playButton,
-            JPanel startPanel) {
+            JPanel startPanel , JLabel sec100sDigit) {
         initComponents();
         this.timerPanel = timerPanel;
         this.secTensDigit = secTensDigit;
@@ -61,7 +68,7 @@ public class o_gamePanel5 extends javax.swing.JPanel {
         this.difficultyPanel = difficultyPanel;
         this.playButton = playButton;
         this.startPanel = startPanel;
-       
+        this.sec100sDigit = sec100sDigit;
     }
 
  
@@ -320,7 +327,7 @@ public class o_gamePanel5 extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(52, 52, 52)
+                .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonMedium30, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -364,12 +371,12 @@ public class o_gamePanel5 extends javax.swing.JPanel {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jButtonMedium14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButtonMedium04, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(71, 71, 71)
+                .addGap(85, 85, 85)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonMedium03, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -408,7 +415,7 @@ public class o_gamePanel5 extends javax.swing.JPanel {
                     .addComponent(jButtonMedium30, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonMedium31, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonMedium34, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -475,6 +482,14 @@ public class o_gamePanel5 extends javax.swing.JPanel {
                cardArrayS2[x2][y2]=0;
                cardArrayS2[x1][y1]=0;
                //input sound correct
+               try{
+               this.correctStream = AudioSystem.getAudioInputStream(correctFile);
+                this.correctClip= AudioSystem.getClip();
+                correctClip.open(correctStream);
+                correctClip.start();}
+               catch(Exception E){
+                   
+               }
            } else{
                //input sound wrong
            }
@@ -508,7 +523,8 @@ public class o_gamePanel5 extends javax.swing.JPanel {
             firstClick = true;
             java.awt.EventQueue.invokeLater(new Runnable() {
                     public void run() {
-                        new congratsWindow(11,jTabbedPane1).setVisible(true); //--------
+                        new congratsWindow(5,11,jTabbedPane1).setVisible(true); //--------
+                        //jPanelStory_5
                     } 
                 });
 
@@ -517,24 +533,7 @@ public class o_gamePanel5 extends javax.swing.JPanel {
             }
          
     }
-    public void resetGame1(){
-        setTimerImage(0,0);
-        cardArrayH2 = new int[4][5]; // -------
-//        this.cardArrayS1 = { { 1, 1 }, { 1, 1}, { 1, 1 } }
-//          RESETING THE Solution Array
-//        resetCardArrayS2();
- // ------
-        firstClick=true;
-        notDone=false;
-        notDone2=false; 
-        clickCounter=1;
-        x1 = 50;x2 = 50;y1 = 50;y2 = 50;
-//        for(i = 0; i<cardInstances; i++){ // resetting summaryArray
-//            for(j = 0; j<cardInstances; j++){
-//                cardArrayS [i][j]=1;
-//            }
-//        }
-    }
+
     
     TimerTask task2 = new TimerTask(){ // timer ng oras
         public void run(){
@@ -548,13 +547,22 @@ public class o_gamePanel5 extends javax.swing.JPanel {
                         timerPanel.setVisible(true);
                         int ones = secNorma1_3% 10;
                         int tens = secNorma1_3 /10;
+                        int huns  = secNorma1_3/100;
+                        if (huns ==1 ){
+                            sec100sDigit.setVisible(true);
+                            sec100sDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer1.png")));
+                        }else{ 
+                            sec100sDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer0.png")));
+                            sec100sDigit.setVisible(false);
+                        }
+                        
                         if (restartLevelWatcher){
                             setTimerImage(0, 0);
                         }else{
                             setTimerImage(ones, tens);
                         }       // Out of time Scenario Restarting Level
                         if(secNorma1_3==0){
-                            resetGame1();
+                            resetGame2();
                             imageClear2();
                             levelFailedWindow();
                         }       secNorma1_3 --;
@@ -569,7 +577,7 @@ public class o_gamePanel5 extends javax.swing.JPanel {
                         setTimerImage(ones, tens);
                         // Out of time Scenario Restarting Level
                         if(secHard_3==0){
-                            resetGame1();
+                            resetGame2();
                             imageClear2();
                             levelFailedWindow();
                         }       secHard_3 --;
@@ -751,7 +759,7 @@ public class o_gamePanel5 extends javax.swing.JPanel {
         cardArrayH2 = new int[4][5]; // -------
 //          RESETING THE Solution Array
 //        cardArrayS2 = new int[4][4];
-//        resetCardArrayS2();
+        resetCardArrayS2();
  // ------
         firstClick=true;
         notDone=false;
@@ -764,7 +772,17 @@ public class o_gamePanel5 extends javax.swing.JPanel {
 //            }
 //        }
     }
+    public void resetCardArrayS2(){
+        for(int i=0; i<cardArrayS2.length; i++) {//-------
+                    for(int j=0; j<cardArrayS2[i].length; j++) {//-------
+        //                System.out.println(i +" "+ j);
+                        cardArrayS2[i][j]=1;   //-------
+
+                    }
+        }
+    }
     
+     
     public void setTimerImage(int ones , int tens ){
         switch (ones){
             case 0:
@@ -829,9 +847,31 @@ public class o_gamePanel5 extends javax.swing.JPanel {
             case 9:
                 secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer9.png")));
                 break;
+                case 10:
+                secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer0.png")));
+                break;
+                case 11:
+                secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer1.png")));
+                break;
+                case 12:
+                secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer2.png")));
+                break;
+                case 13:
+                secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer3.png")));
+                break;
+                case 14:
+                secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer4.png")));
+                break;
+                case 15:
+                secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer5.png")));
+                break;
+                case 16:
+                secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer5.png")));
+                break;
         }
         
     }
+    
 //    public void resetCardArrayS2(){ // Not Used
 //        for (int[] cardArrayS11 : cardArrayS2) {
 //            for (int[] cardArrayS12 : cardArrayS2) {
@@ -1077,7 +1117,7 @@ public class o_gamePanel5 extends javax.swing.JPanel {
 
             b =cardArrayH2[1][3];     //***
             buttonImageGiver(jButtonMedium13, b);//***
-            x1=3;                                 //***
+            x1=1;                                 //***
             y1=3;                                 //***
             System.out.println("1st choice");
         }else{

@@ -5,8 +5,12 @@
  */
 package game;
 
+import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,7 +21,10 @@ import javax.swing.JTabbedPane;
  * @author engeer
  */
 public class o_gamePanel4 extends javax.swing.JPanel {
-    
+    File correctFile = new File ("./src/resources/correct.wav");
+    AudioInputStream correctStream;
+    Clip correctClip; 
+            
     JPanel timerPanel, jPanelStory_4,difficultyPanel,startPanel;
     
     JLabel secOnesDigit,secTensDigit;
@@ -269,7 +276,7 @@ public class o_gamePanel4 extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(131, Short.MAX_VALUE)
+                .addContainerGap(119, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonMedium30, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -306,7 +313,7 @@ public class o_gamePanel4 extends javax.swing.JPanel {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jButtonMedium13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jButtonMedium03, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(108, 108, 108))
+                .addGap(120, 120, 120))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -343,7 +350,7 @@ public class o_gamePanel4 extends javax.swing.JPanel {
                     .addComponent(jButtonMedium32, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonMedium30, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonMedium31, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -406,6 +413,14 @@ public class o_gamePanel4 extends javax.swing.JPanel {
                //System.out.println("well done");
                cardArrayS2[x2][y2]=0;
                cardArrayS2[x1][y1]=0;
+               try{
+               this.correctStream = AudioSystem.getAudioInputStream(correctFile);
+                this.correctClip= AudioSystem.getClip();
+                correctClip.open(correctStream);
+                correctClip.start();}
+               catch(Exception E){
+                   
+               }
            } else{
                //System.out.println("WRONG"); count error
            }
@@ -440,7 +455,9 @@ public class o_gamePanel4 extends javax.swing.JPanel {
             firstClick = true;
             java.awt.EventQueue.invokeLater(new Runnable() {
                     public void run() {
-                        new congratsWindow(9,jTabbedPane1).setVisible(true); //--------
+                        new congratsWindow(4,9,jTabbedPane1).setVisible(true); //--------
+                        //jPanelStory_4
+                        
                     } 
                 });
 
@@ -449,7 +466,7 @@ public class o_gamePanel4 extends javax.swing.JPanel {
             }
          
     }
-    public void resetGame1(){
+    public void resetGame2(){
         setTimerImage(0,0);
         cardArrayH2 = new int[4][4]; // -------
 //        this.cardArrayS1 = { { 1, 1 }, { 1, 1}, { 1, 1 } }
@@ -468,6 +485,7 @@ public class o_gamePanel4 extends javax.swing.JPanel {
 //        }
     }
     
+ 
     TimerTask task2 = new TimerTask(){ // timer ng oras
         public void run(){
             
@@ -486,7 +504,7 @@ public class o_gamePanel4 extends javax.swing.JPanel {
                             setTimerImage(ones, tens);
                         }       // Out of time Scenario Restarting Level
                         if(secNorma1_3==0){
-                            resetGame1();
+                            resetGame2();
                             imageClear2();
                             levelFailedWindow();
                         }       secNorma1_3 --;
@@ -501,7 +519,7 @@ public class o_gamePanel4 extends javax.swing.JPanel {
                         setTimerImage(ones, tens);
                         // Out of time Scenario Restarting Level
                         if(secHard_3==0){
-                            resetGame1();
+                            resetGame2();
                             imageClear2();
                             levelFailedWindow();
                         }       secHard_3 --;
@@ -650,25 +668,6 @@ public class o_gamePanel4 extends javax.swing.JPanel {
         
         
     } 
-    public void resetGame2(){
-        setTimerImage(0,0);
-        cardArrayH2 = new int[4][4]; // -------
-//        this.cardArrayS1 = { { 1, 1 }, { 1, 1}, { 1, 1 } }
-//          RESETING THE Solution Array
-        cardArrayS2 = new int[4][4];
-//        resetCardArrayS2();
- // ------
-        firstClick=true;
-        notDone=false;
-        notDone2=false; 
-        clickCounter=1;
-        x1 = 50;x2 = 50;y1 = 50;y2 = 50;
-//        for(i = 0; i<cardInstances; i++){ // resetting summaryArray
-//            for(j = 0; j<cardInstances; j++){
-//                cardArrayS [i][j]=1;
-//            }
-//        }
-    }
     
     public void setTimerImage(int ones , int tens ){
         switch (ones){
@@ -738,11 +737,13 @@ public class o_gamePanel4 extends javax.swing.JPanel {
         
     }
     public void resetCardArrayS2(){
-//        for (int[] cardArrayS11 : cardArrayS2) {
-//            for (int[] cardArrayS12 : cardArrayS2) {
-//////                cardArrayS1[row][col] = 1;
-//            }
-//        }
+        for(int i=0; i<cardArrayS2.length; i++) {//-------
+                    for(int j=0; j<cardArrayS2[i].length; j++) {//-------
+        //                System.out.println(i +" "+ j);
+                        cardArrayS2[i][j]=1;   //-------
+
+                    }
+        }
     }    //not used dahil pantay
     public void levelFailedWindow(){
         java.awt.EventQueue.invokeLater(new Runnable() {// prompt to restart or quit
@@ -974,7 +975,7 @@ public class o_gamePanel4 extends javax.swing.JPanel {
 
             b =cardArrayH2[1][3];     //***
             buttonImageGiver(jButtonMedium13, b);//***
-            x1=3;                                 //***
+            x1=1;                                 //***
             y1=3;                                 //***
             System.out.println("1st choice");
         }else{

@@ -5,8 +5,12 @@
  */
 package game;
 
+import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,10 +21,13 @@ import javax.swing.JTabbedPane;
  * @author engeer
  */
 public class o_gamePanel6 extends javax.swing.JPanel {
-    
+    File correctFile = new File ("./src/resources/correct.wav");
+    AudioInputStream correctStream;
+    Clip correctClip; 
+            
     JPanel timerPanel,difficultyPanel,startPanel;
     
-    JLabel secOnesDigit,secTensDigit;
+    JLabel secOnesDigit,secTensDigit,sec100sDigit;
     JTabbedPane jTabbedPane1; 
     JButton playButton;
     
@@ -49,7 +56,7 @@ public class o_gamePanel6 extends javax.swing.JPanel {
     }
     public o_gamePanel6(JPanel timerPanel,JLabel secTensDigit, JLabel secOnesDigit,
             JTabbedPane jTabbedPane1, JPanel difficultyPanel, JButton playButton,
-            JPanel startPanel) {
+            JPanel startPanel,JLabel sec100sDigit) {
         initComponents();
         this.timerPanel = timerPanel;
         this.secTensDigit = secTensDigit;
@@ -58,7 +65,7 @@ public class o_gamePanel6 extends javax.swing.JPanel {
         this.difficultyPanel = difficultyPanel;
         this.playButton = playButton;
         this.startPanel = startPanel;
-       
+       this.sec100sDigit =sec100sDigit;
     }
 
  
@@ -478,6 +485,8 @@ public class o_gamePanel6 extends javax.swing.JPanel {
                     for(;;){                                    //2nd coordinate but same value
                         x=(int)(Math.random()*4);  // -------
                         y=(int)(Math.random()*6); // -------
+//                        System.out.println(x);
+//                        System.out.println(y);
                        if(cardArrayH2[x][y]==0){
                            cardArrayH2[x][y]=i;
                            break;
@@ -524,6 +533,14 @@ public class o_gamePanel6 extends javax.swing.JPanel {
                cardArrayS2[x2][y2]=0;
                cardArrayS2[x1][y1]=0;
                //input sound correct
+               try{
+               this.correctStream = AudioSystem.getAudioInputStream(correctFile);
+                this.correctClip= AudioSystem.getClip();
+                correctClip.open(correctStream);
+                correctClip.start();}
+               catch(Exception E){
+                   
+               }
            } else{
                //input sound wrong
            }
@@ -557,7 +574,8 @@ public class o_gamePanel6 extends javax.swing.JPanel {
             firstClick = true;
             java.awt.EventQueue.invokeLater(new Runnable() {
                     public void run() {
-                        new congratsWindow(13,jTabbedPane1).setVisible(true); //-------- //HERE
+                        new congratsWindow(6,13,jTabbedPane1).setVisible(true); //-------- //HERE
+                        //jPanelStory_6
                     } 
                 });
 
@@ -568,7 +586,7 @@ public class o_gamePanel6 extends javax.swing.JPanel {
     }
     public void resetGame1(){
         setTimerImage(0,0);
-        cardArrayH2 = new int[4][5]; // ------- //HERE
+        cardArrayH2 = new int[4][6]; // ------- //HERE
 //        this.cardArrayS1 = { { 1, 1 }, { 1, 1}, { 1, 1 } }
 //          RESETING THE Solution Array
 //        resetCardArrayS2();
@@ -597,13 +615,21 @@ public class o_gamePanel6 extends javax.swing.JPanel {
                         timerPanel.setVisible(true);
                         int ones = secNorma1_3% 10;
                         int tens = secNorma1_3 /10;
+                        int huns  = secNorma1_3/100;
+                        if (huns ==1 ){
+                            sec100sDigit.setVisible(true);
+                            sec100sDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer1.png")));
+                        }else{ 
+                            sec100sDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer0.png")));
+                            sec100sDigit.setVisible(false);
+                        }
                         if (restartLevelWatcher){
                             setTimerImage(0, 0);
                         }else{
                             setTimerImage(ones, tens);
                         }       // Out of time Scenario Restarting Level
                         if(secNorma1_3==0){
-                            resetGame1();
+                            resetGame2();
                             imageClear2();
                             levelFailedWindow();
                         }       secNorma1_3 --;
@@ -618,7 +644,7 @@ public class o_gamePanel6 extends javax.swing.JPanel {
                         setTimerImage(ones, tens);
                         // Out of time Scenario Restarting Level
                         if(secHard_3==0){
-                            resetGame1();
+                            resetGame2();
                             imageClear2();
                             levelFailedWindow();
                         }       secHard_3 --;
@@ -829,10 +855,10 @@ public class o_gamePanel6 extends javax.swing.JPanel {
     } 
     public void resetGame2(){ // Not Used
         setTimerImage(0,0);
-        cardArrayH2 = new int[4][5]; // -------
+        cardArrayH2 = new int[4][6]; // -------
 //          RESETING THE Solution Array
 //        cardArrayS2 = new int[4][4];
-//        resetCardArrayS2();
+        resetCardArrayS2();
  // ------
         firstClick=true;
         notDone=false;
@@ -844,6 +870,15 @@ public class o_gamePanel6 extends javax.swing.JPanel {
 //                cardArrayS [i][j]=1;
 //            }
 //        }
+    }
+    public void resetCardArrayS2(){
+        for(int i=0; i<cardArrayS2.length; i++) {//-------
+                    for(int j=0; j<cardArrayS2[i].length; j++) {//-------
+        //                System.out.println(i +" "+ j);
+                        cardArrayS2[i][j]=1;   //-------
+
+                    }
+        }
     }
     
     public void setTimerImage(int ones , int tens ){
@@ -910,9 +945,31 @@ public class o_gamePanel6 extends javax.swing.JPanel {
             case 9:
                 secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer9.png")));
                 break;
+                case 10:
+                secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer0.png")));
+                break;
+                case 11:
+                secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer1.png")));
+                break;
+                case 12:
+                secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer2.png")));
+                break;
+                case 13:
+                secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer3.png")));
+                break;
+                case 14:
+                secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer4.png")));
+                break;
+                case 15:
+                secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer5.png")));
+                break;
+                case 16:
+                secTensDigit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/timer5.png")));
+                break;
         }
         
     }
+    
 //    public void resetCardArrayS2(){ // Not Used
 //        for (int[] cardArrayS11 : cardArrayS2) {
 //            for (int[] cardArrayS12 : cardArrayS2) {
@@ -975,7 +1032,7 @@ public class o_gamePanel6 extends javax.swing.JPanel {
                 break;
             case 12:
 //                
-                a.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/11.jpg")));
+                a.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/12.jpg")));
                 break;
         }
     }
@@ -1166,7 +1223,7 @@ public class o_gamePanel6 extends javax.swing.JPanel {
 
             b =cardArrayH2[1][3];     //***
             buttonImageGiver(jButtonMedium13, b);//***
-            x1=3;                                 //***
+            x1=1;                                 //***
             y1=3;                                 //***
             System.out.println("1st choice");
         }else{

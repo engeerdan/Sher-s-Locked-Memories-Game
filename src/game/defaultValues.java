@@ -10,22 +10,22 @@ package game;
  * @author engeer
  */
 public class defaultValues {
-        int dsecNorma1_1 = 30; // temp 10 should be 30
+        int dsecNorma1_1 = 20; // temp 10 should be 30
         int dsecHard_1 = 10;
         int dsecNorma1_2 = 40;
         int dsecHard_2 = 15;
-        int dsecNorma1_3 = 5;
-        int dsecHard_3 = 15;
-        int dsecNorma1_4 = 5;
-        int dsecHard_4 = 15;
-        int dsecNorma1_5 = 5;
-        int dsecHard_5 = 15;
-        int dsecNorma1_6 = 5;
-        int dsecHard_6 = 15;
-        int dsecNorma1_7 = 5;
-        int dsecHard_7 = 15;
-        int dsecNorma1_8 = 5;
-        int dsecHard_8 = 15;
+        int dsecNorma1_3 = 60;
+        int dsecHard_3 = 30;
+        int dsecNorma1_4 = 80;
+        int dsecHard_4 = 40;
+        int dsecNorma1_5 = 100;
+        int dsecHard_5 = 60;
+        int dsecNorma1_6 = 120;
+        int dsecHard_6 = 80;
+        int dsecNorma1_7 = 140;
+        int dsecHard_7 = 100;
+        int dsecNorma1_8 = 160;
+        int dsecHard_8 = 120;
 
     public int getDsecNorma1_1() {
         return dsecNorma1_1;
